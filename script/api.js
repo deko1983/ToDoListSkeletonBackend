@@ -43,6 +43,21 @@ function deleteTask(taskId, callback) {
   }
 }
 
+function deleteTask(element, callBack) {
+  if (element !== undefined)  {
+    let taskId = parseInt(element.dataset.id);
+
+    makeXHRRequest('DELETE', apiUrl + owner + `/task/${taskId}`)
+      .then(data => {
+        console.log(data);
+        callBack(element);
+      })
+      .catch(error => {
+        console.error('Errore durante la richiesta:', error);
+      });
+  }
+}
+
 function makeXHRRequest(method, url, data = null) {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();

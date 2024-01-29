@@ -11,6 +11,10 @@ document.getElementById('add-item-form').addEventListener('submit', function (ev
   document.getElementById('new-item-text').value = '';
 });
 
+// carico gli elementi
+
+loadTasks(addItem);
+
 function addItem(data) {
   if (data !== undefined && 'description' in data)  {
     var itemText = data.description;
@@ -20,7 +24,7 @@ function addItem(data) {
       var newItem = document.createElement('li');
   
       newItem.setAttribute('class', 'list-group-item d-flex justify-content-between align-items-center');
-  
+      newItem.setAttribute('data-id', data.id);
       // elemento span
       var spanElement = document.createElement('span');
       spanElement.innerText = itemText;
@@ -29,7 +33,7 @@ function addItem(data) {
       var buttons = document.createElement('div');
   
       buttons.innerHTML = '<button type="button" class="btn btn-warning btn-sm" onclick="editTask(this.parentNode.parentNode)"><i class="fas fa-pen-to-square"></i></button>'
-        + '<button type="button" class="btn btn-danger btn-sm" onclick="deleteTask(this.parentNode.parentNode)"><i class="fas fa-trash-alt"></i></button>';
+        + '<button type="button" class="btn btn-danger btn-sm" onclick="deleteItem(this.parentNode.parentNode)"><i class="fas fa-trash-alt"></i></button>';
   
       newItem.appendChild(spanElement);
       newItem.appendChild(buttons);
@@ -37,6 +41,12 @@ function addItem(data) {
       itemList.appendChild(newItem);
     }
   }
+}
+
+function deleteItem(elementToRemove) {
+  var taskId = parseInt(elementToRemove.dataset.id); 
+  
+  deleteTask(taskId, data => elementToRemove.remove());
 }
 
 
