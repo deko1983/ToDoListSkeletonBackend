@@ -1,5 +1,5 @@
-var apiUrl = 'http://localhost:3000/'; // dacambiare
-var owner = ''; // obbligatorio
+var apiUrl = 'http://192.168.0.108:3000/'; 
+var owner = 'fmariani'; // obbligatorio
 
 function loadTasks(callBack) {
   makeXHRRequest('GET', apiUrl + owner + '/tasks')
@@ -30,14 +30,12 @@ function saveTask(taskText, callback) {
   }
 }
 
-function deleteTask(element, callBack) {
-  if (element !== undefined)  {
-    let taskId = parseInt(element.dataset.id);
-
-    makeXHRRequest('DELETE', apiUrl + owner + `/tasks/${taskId}`)
+function deleteTask(taskId, callback) {
+  if (taskId !== undefined)  {
+    makeXHRRequest('DELETE', apiUrl + owner + `/task/${taskId}`)
       .then(data => {
         console.log(data);
-        callBack(element);
+        callback(taskId);
       })
       .catch(error => {
         console.error('Errore durante la richiesta:', error);
